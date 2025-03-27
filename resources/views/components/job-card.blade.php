@@ -1,0 +1,18 @@
+
+<x-panel class="flex-col text-center">
+    <div class="self-start text-sm">Laracasts</div>
+    <div class="py-8 ">
+        <h3 class="font-bold group-hover:text-blue-900 transition-colors duration-200">Video Producer</h3>
+        <p class="text-xs text-gray-400 mt-1.5">Full Time - From $60,000</p>
+    </div>
+
+    <div class="flex justify-between items-center mt-auto">
+        <div>
+            <x-tag class="text-[10px] px-3 py-1">Backend</x-tag>
+            <x-tag class="text-[10px] px-3 py-1">Frontend</x-tag>
+            <x-tag class="text-[10px] px-3 py-1">UI/UX</x-tag>
+        </div>
+
+        <x-employer-logo :width="42"/>
+    </div>
+</x-panel>
