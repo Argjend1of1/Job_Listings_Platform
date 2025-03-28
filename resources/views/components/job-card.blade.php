@@ -1,16 +1,15 @@
-
 <x-panel class="flex-col text-center">
-    <div class="self-start text-sm">Laracasts</div>
+    <div class="self-start text-sm">{{$job->employer->name}}</div>
     <div class="py-8 ">
-        <h3 class="font-bold group-hover:text-blue-900 transition-colors duration-200">Video Producer</h3>
-        <p class="text-xs text-gray-400 mt-1.5">Full Time - From $60,000</p>
+        <h3 class="font-bold group-hover:text-blue-900 transition-colors duration-200">{{$job->title}}</h3>
+        <p class="text-xs text-gray-400 mt-1.5">{{$job->schedule}}- {{$job->salary}}</p>
     </div>
 
     <div class="flex justify-between items-center mt-auto">
         <div>
-            <x-tag class="text-[10px] px-3 py-1">Backend</x-tag>
-            <x-tag class="text-[10px] px-3 py-1">Frontend</x-tag>
-            <x-tag class="text-[10px] px-3 py-1">UI/UX</x-tag>
+            @foreach($job->tags as $tag)
+                <x-tag :$tag class="text-[10px] px-3 py-1"/>
+            @endforeach
         </div>
 
         <x-employer-logo :width="42"/>
