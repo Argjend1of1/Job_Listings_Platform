@@ -11,9 +11,9 @@
     </div>
 
     <div class="self-start">
-        <x-tag>Tag</x-tag>
-        <x-tag>Tag</x-tag>
-        <x-tag>Tag</x-tag>
+        <x-tag class="text-[10px] px-3 py-1">Tag</x-tag>
+        <x-tag class="text-[10px] px-3 py-1">Tag</x-tag>
+        <x-tag class="text-[10px] px-3 py-1">Tag</x-tag>
     </div>
 </x-panel>
 
