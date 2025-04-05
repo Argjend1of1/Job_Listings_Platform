@@ -25,9 +25,31 @@
                 <a href="">Companies</a>
             </div>
 
-            <div>
-                <a href="">Post a Job</a>
-            </div>
+            @auth()
+                <div class="space-x-5 flex flex-row items-center">
+                    <a href="/jobs/create">Post a Job</a>
+                    <div class="flex flex-col items-center space-y-2">
+                        @if(auth()->user())
+                            <a href="/dashboard/{{auth()->user()->id}}">
+                                <img class="cursor-pointer rounded-xl" width="40" height="40" alt="Employer Logo" src="{{auth()->user()->employer->logo}}">
+                            </a>
+                        @endif
+{{--                        onclick of the image above we should see the logout + go to dashboard button--}}
+{{--                        <form action="/logout" method="POST">--}}
+{{--                            @csrf--}}
+{{--                            @method('DELETE')--}}
+{{--                            <button class="text-red-400 cursor-pointer" type="submit">Log Out</button>--}}
+{{--                        </form>--}}
+                    </div>
+                </div>
+            @endauth
+
+            @guest()
+                <div class="space-x-6 font-bold">
+                    <a href="/login">Login</a>
+                    <a href="/register">Register</a>
+                </div>
+            @endguest
         </nav>
 
         <main class="mt-10 max-w-[986px] mx-auto">

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
-use App\Http\Requests\StoreJobRequest;
-use App\Http\Requests\UpdateJobRequest;
 use App\Models\Tag;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class JobController extends Controller
 {
@@ -14,12 +16,16 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::all()->groupBy('featured');
+        $jobs = Job::latest()
+            ->with(['employer', 'tags'])
+            ->get()
+            ->groupBy('featured');
+
 //        return $jobs;
 
         return view('jobs.index', [
-            'featuredJobs' => $jobs[0],
-            'jobs' => $jobs[1],
+            'jobs' => $jobs[0],
+            'featuredJobs' => $jobs[1],
             'tags' => Tag::all()
         ]);
     }
@@ -29,46 +35,72 @@ class JobController extends Controller
      */
     public function create()
     {
-        //
+        return view('jobs.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreJobRequest $request)
+    public function store(Request $request)
     {
-        //
+        $attributes = $request->validate([
+            'title' => ['required'],
+            'salary' => ['required'],
+            'location' => ['required'],
+            'schedule' => ['required', Rule::in(['Part Time', 'Full Time'])],
+            'url' => ['required', 'active_url'],
+            'tags' => ['nullable']
+        ]);
+
+        $attributes['featured'] = $request->has('featured');
+
+        $job = Auth::user()->employer->job()->create(
+            Arr::except($attributes, 'tags')
+        );
+
+
+        if($attributes['tags']) {
+            foreach (explode(',', $attributes['tags']) as $tag) {
+                $job->tag($tag);
+            }
+        }
+
+        return redirect('/');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Job $job)
-    {
-        //
+    public function edit($id, Job $job) {
+        if(Auth::user()->id != $id) {
+            return redirect('/');
+        }
+
+        return view('dashboard/edit', [
+            'job' => $job,
+            'id' => $id
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Job $job)
-    {
-        //
+    public function update(Request $request, $id, Job $job) {
+
+        $request->validate([
+            'title'       => 'required|string|max:255',
+            'salary'      => 'required|string|max:100', // if salary is in string format like "$50,000 USD"
+            'location'    => 'required|string|max:255',
+            'schedule'    => 'required|in:Full Time,Part Time', // customize as needed
+        ]);
+
+        $job->update([
+            'title' => $request->title,
+            'salary' => $request->salary,
+            'location' => $request->location,
+            'schedule' => $request->schedule
+        ]);
+
+//      send an email to the user through queues
+
+        return redirect("dashboard/$id");
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateJobRequest $request, Job $job)
-    {
-        //
-    }
+    public function destroy($id, Job $job) {
+        $job->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Job $job)
-    {
-        //
+        return redirect("dashboard/$id");
+
     }
 }
