@@ -8,15 +8,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
+use Laravel\Sanctum\HasApiTokens;
 
 class SessionController extends Controller
-{
-    /**
+{/**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $employer = Auth::user()->employer;
+        $tags = Auth::user()->tags;
+
+
+        return response()->json([
+            'user' => $user,
+            'employer' => $employer,
+            'tags' => $tags
+        ]);
     }
 
     /**
@@ -33,26 +42,20 @@ class SessionController extends Controller
         $attributes = $request->validated();
 
         if(! Auth::attempt($attributes)) {
-            throw ValidationException::withMessages([
+            return throw ValidationException::withMessages([
                 'password' => 'Sorry, those credentials do not match.'
             ]);
         }
 
         $user = Auth::user();
-        $token = $user->createToken('login_token')->plainTextToken;
-//        dd($token);
 
         return response()->json([
             'message' => 'Logged in successfully',
-            'user' => $user,
-            'token' => $token
+//            'user' => $user,
+            'token' => $user->createToken('GeneratedTokens')->plainTextToken
         ]);
-
-//        when it was with sessions and no frontend:
-//        $request->session()->regenerateToken();
-//        return redirect('/');
-
     }
+
 
     public function destroy()
     {

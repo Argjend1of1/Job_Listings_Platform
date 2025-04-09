@@ -1,10 +1,14 @@
  <x-layout>
      <x-page-heading>Log In</x-page-heading>
 
-     <x-forms.form method="POST" action="/login" id="loginForm">
+     <x-forms.form method="POST" action="/api/login" id="loginForm">
          <x-forms.input label="Email" name="email"/>
          <x-forms.input type="password" label="Password" name="password"/>
 
-         <x-forms.button>Log In</x-forms.button>
+         <p class="text-red-700 font-semibold" id="responseMessage"></p>
+
+         <x-forms.button type="submit">Log In</x-forms.button>
      </x-forms.form>
+
+     @vite(['resources/js/jobHandling.js'])
  </x-layout>
