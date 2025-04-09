@@ -5,3 +5,4 @@ import.meta.glob([
 ]);
 
 import './dropdown.js'
+import './jobHandling.js'

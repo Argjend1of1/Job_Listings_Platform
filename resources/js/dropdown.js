@@ -3,7 +3,7 @@ const dropdownMenu = document.getElementById('dropdownMenu');
 const profileDropdown = document.getElementById('profileDropdown');
 
 // Toggle dropdown on button click
-document.getElementById('dropdownButton').addEventListener('click',  (e) => {
+dropdownButton.addEventListener('click',  (e) => {
     e.stopPropagation(); // Prevent click from bubbling
     dropdownMenu.classList.toggle('opacity-0');
     dropdownMenu.classList.toggle('scale-95');
@@ -13,8 +13,7 @@ document.getElementById('dropdownButton').addEventListener('click',  (e) => {
 });
 
 // Hide dropdown when clicking outside
-document.addEventListener('click', function (e) {
-    // now if the element with the id doesn't contain this classlist add it
+document.addEventListener('click',  (e) => {
     if (!profileDropdown.contains(e.target)) {
         dropdownMenu.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
         dropdownMenu.classList.remove('opacity-100', 'scale-100');

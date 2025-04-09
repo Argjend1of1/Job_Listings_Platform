@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,12 +27,10 @@ class SessionController extends Controller
         return view('auth.login');
     }
 
-    public function store(Request $request)
+
+    public function store(LoginRequest $request)
     {
-        $attributes = $request->validate([
-           'email' => ['required', 'email'],
-            'password' => ['required', Password::min(6)]
-        ]);
+        $attributes = $request->validated();
 
         if(! Auth::attempt($attributes)) {
             throw ValidationException::withMessages([
@@ -39,9 +38,20 @@ class SessionController extends Controller
             ]);
         }
 
-        $request->session()->regenerate();
+        $user = Auth::user();
+        $token = $user->createToken('login_token')->plainTextToken;
+//        dd($token);
 
-        return redirect('/');
+        return response()->json([
+            'message' => 'Logged in successfully',
+            'user' => $user,
+            'token' => $token
+        ]);
+
+//        when it was with sessions and no frontend:
+//        $request->session()->regenerateToken();
+//        return redirect('/');
+
     }
 
     public function destroy()
