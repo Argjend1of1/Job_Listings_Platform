@@ -39,7 +39,7 @@
         </main>
     </div>
 
-    @vite(['resources/js/homepage.js'])
+    @vite(['resources/js/session.js'])
 </body>
 </html>
 

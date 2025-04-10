@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,34 +17,49 @@ class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
         try {
-            $userAttributes = $request->validate([
-                'name' => ['required'],
-                'email' => ['required', 'email', 'unique:users,email'],
-                'password' => ['required', 'confirmed', Password::min(6)]
+            $userAttributes = $request->validated();
+
+            $userTableAttributes = [
+                'name' => $userAttributes['name'],
+                'email' => $userAttributes['email'],
+                'password' => bcrypt($userAttributes['password'])
+            ];
+
+            // Check if the 'employer' field is provided
+            if ($userAttributes['employer'] !== null) {
+                // Check if the 'logo' field is provided and is a valid file
+                if (!$request->hasFile('logo')) {
+                    return response()->json([
+                        'message' => 'A company must have a logo!'
+                    ], 422);
+                }
+
+                $logoPath = $request->file('logo')->store('logos'); // Store the file
+
+                $user = User::create($userTableAttributes);
+                // Create the employer record
+                $user->employer()->create([
+                    'name' => $userAttributes['employer'],
+                    'logo' => $logoPath
+                ]);
+            }else {
+                $user = User::create($userTableAttributes);
+            }
+
+            return response()->json([
+                'message' => 'Successfully Registered!',
+                'user' => $user,
+                'employer' => $user->employer ?? null
             ]);
 
-            $employerAttributes = $request->validate([
-                'employer' => ['required'],
-                'logo' => ['required', File::types(['png', 'jpg', 'jpeg', 'webp'])],
-            ]);
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            return response()->json([
+                'message' => 'User already exists!',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        $user = User::create($userAttributes);
-
-        $logoPath = $request->logo->store('logos');
-
-        $user->employer()->create([
-            'name' => $employerAttributes['employer'],
-            'logo' => $logoPath
-        ]);
-
-        Auth::login($user);
-
-        return redirect('/');
     }
 }

@@ -10,5 +10,5 @@
          <x-forms.button type="submit">Log In</x-forms.button>
      </x-forms.form>
 
-     @vite(['resources/js/jobHandling.js'])
+     @vite(['resources/js/login.js'])
  </x-layout>

@@ -51,7 +51,7 @@ class SessionController extends Controller
 
         return response()->json([
             'message' => 'Logged in successfully',
-//            'user' => $user,
+            'user' => $user,
             'token' => $user->createToken('GeneratedTokens')->plainTextToken
         ]);
     }

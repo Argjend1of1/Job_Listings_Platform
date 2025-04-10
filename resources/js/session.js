@@ -1,5 +1,4 @@
-import {initializeDropdown} from "./dropdown.js";
-
+import {initializeDropdown} from "./navDropdown.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const token = localStorage.getItem("authToken");
@@ -23,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const jsonData = await res.json();
         const user = jsonData.user
         const employer = user.employer;
-        console.log("Authenticated user:", employer);
+        console.log("Authenticated user:", user);
 
         const userLinks =
             document.getElementById('userLinks');
