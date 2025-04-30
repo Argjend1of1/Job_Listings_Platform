@@ -14,7 +14,7 @@ class JobController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $jobs = Job::latest()
             ->with(['employer', 'tags'])
@@ -23,6 +23,7 @@ class JobController extends Controller
 //        dd($jobs->all());
 
 //        return $jobs;
+
 
         return view('jobs.index', [
             'jobs' => $jobs[0] ?? null,
@@ -55,7 +56,6 @@ class JobController extends Controller
         $job = Auth::user()->employer->job()->create(
             Arr::except($attributes, 'tags')
         );
-
 
         if($attributes['tags']) {
             foreach (explode(',', $attributes['tags']) as $tag) {

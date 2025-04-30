@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSRF token for JavaScript -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Pixel Positions</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap"
@@ -34,12 +37,16 @@
             </div>
         </nav>
 
-        <main class="mt-10 max-w-[986px] mx-auto">
+        <main class="mt-8 max-w-[986px] mx-auto">
             {{ $slot }}
         </main>
     </div>
 
-    @vite(['resources/js/session.js'])
+    @vite([
+        'resources/js/session.js',
+        'resources/js/jobs/create.js',
+        'resources/js/dashboard/index.js'
+    ])
 </body>
 </html>
 

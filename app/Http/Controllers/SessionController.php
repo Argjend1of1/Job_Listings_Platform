@@ -18,13 +18,10 @@ class SessionController extends Controller
     {
         $user = Auth::user();
         $employer = Auth::user()->employer;
-        $tags = Auth::user()->tags;
-
 
         return response()->json([
             'user' => $user,
             'employer' => $employer,
-            'tags' => $tags
         ]);
     }
 
@@ -39,20 +36,19 @@ class SessionController extends Controller
 
     public function store(LoginRequest $request)
     {
-        $attributes = $request->validated();
+        $credentials = $request->validated();
 
-        if(! Auth::attempt($attributes)) {
-            return throw ValidationException::withMessages([
-                'password' => 'Sorry, those credentials do not match.'
-            ]);
+        if (!Auth::attempt($credentials)) {
+            return response()->json([
+                'message' => 'The provided credentials are incorrect.'
+            ], 422);
         }
 
-        $user = Auth::user();
+        $request->session()->regenerate();
 
         return response()->json([
             'message' => 'Logged in successfully',
-            'user' => $user,
-            'token' => $user->createToken('GeneratedTokens')->plainTextToken
+            'user' => Auth::user()
         ]);
     }
 
@@ -64,15 +60,18 @@ class SessionController extends Controller
         return redirect('/');
     }
 
-    public function dashboard($id) {
-        if(Auth::user()->id != $id) {
-            return redirect('/');
-        }
+    public function dashboard() {
+        return view('dashboard.index');
+    }
 
-        $user = User::find($id);
+    public function listJobs(Request $request) {
+//      will only work if route protected with auth:sanctum and a valid token is sent with the request
+//      laravel automatically checks for the authenticated user.
+        $user = $request->user();
 
-        return view('dashboard/index', [
-            'user' => $user
+        return response()->json([
+            'user' => $user,
+            'jobs' => $user->employer->job
         ]);
     }
 }
