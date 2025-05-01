@@ -22,11 +22,10 @@ Route::get('/tags/{tag:name}', [TagController::class, '__invoke']);//{tag:name} 
 Route::middleware('auth')->group(function () {
 //    Route::get('/jobs/create', [JobController::class, 'create']);
     Route::post('/jobs', [JobController::class, 'store']);
-    Route::delete('/logout', [SessionController::class, 'destroy']);
 //    Route::get('/dashboard/{id}', [SessionController::class, 'dashboard']);
 //    Route::get('/dashboard/edit/{job}', [JobController::class, 'edit']);
 //    Route::patch('/dashboard/{id}/edit/{job}', [JobController::class, 'update']);
-    Route::delete('/dashboard/{id}/edit/{job}', [JobController::class, 'destroy']);
+//    Route::delete('/dashboard/{id}/edit/{job}', [JobController::class, 'destroy']);
 });
 
 

@@ -22,12 +22,16 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [SessionController::class, 'index']);
+    Route::delete('/logout', [SessionController::class, 'destroy']);
+
     Route::get('/jobs/create', [JobController::class, 'create']);
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/user/jobs', [DashboardController::class, 'create']);
     Route::get('/dashboard/edit/{job}', [DashboardController::class, 'editJob']);
     Route::patch('/dashboard/edit/{job}', [DashboardController::class, 'update']);
+    Route::delete('/dashboard/edit/{job}', [DashboardController::class, 'destroy']);
+
 });
 
 

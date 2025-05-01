@@ -21,22 +21,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         formContainer.innerHTML = `
             <form id="editJobForm" class="space-y-4">
                 <div>
-                    <label class="block text-white mb-2">Job Title</label>
+                    <label class="block text-white mb-2 font-bold">Job Title</label>
                     <input name="title" value="${job.title}" class="rounded-xl bg-white/10 border border-white/10 px-5 py-4 w-full" />
                 </div>
 
                 <div>
-                    <label class="block text-white mb-2">Schedule</label>
+                    <label class="block text-white mb-2 font-bold">Schedule</label>
                     <input name="schedule" value="${job.schedule}" class="rounded-xl bg-white/10 border border-white/10 px-5 py-4 w-full" />
                 </div>
 
                 <div>
-                    <label class="block text-white mb-2">Salary</label>
+                    <label class="block text-white mb-2 font-bold">Salary</label>
                     <input name="salary" value="${job.salary}" class="rounded-xl bg-white/10 border border-white/10 px-5 py-4 w-full" />
                 </div>
                 <p class="mb-2 mt-2 text-green-500" id="userMessage"></p>
 
-                <button type="submit" class="bg-blue-700 rounded py-2 px-6 font-bold mt-3 hover:bg-blue-600 cursor-pointer focus:bg-blue-900">Update Job</button>
+                <div class="mt-7 flex justify-between">
+                    <button type="submit" class="bg-blue-700 rounded py-2 px-6 font-bold hover:bg-blue-600 cursor-pointer focus:bg-blue-900">Update Job</button>
+                    <button id="deleteListing" class="bg-red-700 rounded py-2 px-6 font-bold ml-3 hover:bg-red-600 cursor-pointer focus:bg-red-900">Delete Listing</button>
+                </div>
             </form>
         `;
 

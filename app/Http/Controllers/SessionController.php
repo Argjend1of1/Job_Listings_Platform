@@ -52,11 +52,16 @@ class SessionController extends Controller
         ]);
     }
 
-
-    public function destroy()
+    public function destroy(Request $request)
     {
-        Auth::logout();
+        Auth::guard('web')->logout(); // explicitly log out via the session-based guard
 
-        return redirect('/');
+        // Optionally invalidate the session and regenerate CSRF token
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return response()->json([
+            'message' => 'Successfully logged out!'
+        ]);
     }
 }

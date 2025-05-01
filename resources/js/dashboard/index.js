@@ -14,14 +14,20 @@ function renderJobCard(job, user) {
                 <div class="flex-1 flex flex-col ml-3">
                     <a href="#" class="self-start text-sm text-gray-400">${user.employer.name}</a>
                     <h3 class="font-bold text-xl mt-1 group-hover:text-blue-900 transition-colors duration-200">
-                        <a href="/dashboard/edit/${job.id}">
-                            ${job.title}
-                        </a>
+                        ${job.title}
                     </h3>
                     <p class="text-sm text-gray-400 mt-auto">${job.schedule} - ${job.salary}</p>
                 </div>
                 <div class="self-start flex flex-wrap gap-2">
                     ${tagsHtml ? tagsHtml : ''}
+                </div>
+                <div class="self-end">
+                    <a
+                        href="/dashboard/edit/${job.id}"
+                        class="rounded py-2 px-6 text-gray-400 font-medium mt-3 hover:underline cursor-pointer"
+                    >
+                        Edit Job
+                    </a>
                 </div>
             </div>
     `;

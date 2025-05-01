@@ -1,4 +1,6 @@
 import { initializeDropdown } from "./navDropdown.js";
+import {getCookieValue} from "./reusableFunctions/getCookie.js";
+
 
 document.addEventListener("DOMContentLoaded", async () => {
     try {
@@ -39,10 +41,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         document.getElementById('logoutBtn').addEventListener('click', async () => {
             await fetch('/api/logout', {
-                method: 'POST',
+                method: 'DELETE',
                 credentials: 'include',
                 headers: {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'X-XSRF-TOKEN': decodeURIComponent(getCookieValue('XSRF-TOKEN'))
                 }
             });
             window.location.href = '/';

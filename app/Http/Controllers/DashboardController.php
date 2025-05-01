@@ -60,4 +60,12 @@ class DashboardController extends Controller
         ], 200);
 //      reloading a fresh model instance for the job with its relations
     }
+
+    public function destroy(Job $job) {
+        $job->delete();
+
+        return response()->json([
+            'message' => 'Listing deleted successfully.'
+        ], 200);
+    }
 }
