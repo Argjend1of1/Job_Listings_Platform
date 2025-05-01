@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
@@ -20,10 +21,13 @@ use Illuminate\Http\Request;
 //Route::get('/', [JobController::class, 'index']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/dashboard', [SessionController::class, 'dashboard']);
-    Route::get('/user/jobs', [SessionController::class, 'listJobs']);
     Route::get('/user', [SessionController::class, 'index']);
     Route::get('/jobs/create', [JobController::class, 'create']);
+
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/user/jobs', [DashboardController::class, 'create']);
+    Route::get('/dashboard/edit/{job}', [DashboardController::class, 'editJob']);
+    Route::patch('/dashboard/edit/{job}', [DashboardController::class, 'update']);
 });
 
 

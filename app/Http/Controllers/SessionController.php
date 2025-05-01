@@ -59,19 +59,4 @@ class SessionController extends Controller
 
         return redirect('/');
     }
-
-    public function dashboard() {
-        return view('dashboard.index');
-    }
-
-    public function listJobs(Request $request) {
-//      will only work if route protected with auth:sanctum and a valid token is sent with the request
-//      laravel automatically checks for the authenticated user.
-        $user = $request->user();
-
-        return response()->json([
-            'user' => $user,
-            'jobs' => $user->employer->job
-        ]);
-    }
 }
