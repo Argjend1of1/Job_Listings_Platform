@@ -1,6 +1,6 @@
 <x-layout>
-    <x-page-heading>New Job</x-page-heading>
-    <x-forms.form method="POST" action="/jobs">
+    <x-page-heading>New Job Listing</x-page-heading>
+    <x-forms.form method="POST" action="/api/jobs" id="jobForm">
         <x-forms.input label="Title" name="title" placeholder="CEO" />
         <x-forms.input label="Salary" name="salary" placeholder="$90,000 USD" />
         <x-forms.input label="Location" name="location" placeholder="Winter Park, Florida" />
@@ -10,13 +10,14 @@
             <option>Full Time</option>
         </x-forms.select>
 
-        <x-forms.input label="URL" name="url" placeholder="https://acme.com/jobs/ceo-wanted" />
-        <x-forms.input label="Feature (Costs Extra)" name="featured" />
-
         <x-forms.divider/>
 
-        <x-forms.input label="Tags (comma separated)" name="tags" placeholder="Laracasts, video, education" />
+        <x-forms.input label="URL" name="url" placeholder="https://acme.com/jobs/ceo-wanted" />
+        <x-forms.input label="Tags (comma separated)" name="tags" placeholder="developer, frontend, backend" />
+        <p class="mt-3 mb-3 text-green-500" id="userMessage"></p>
 
-        <x-forms.button>Publish</x-forms.button>
+        <x-forms.button type="submit">Publish</x-forms.button>
     </x-forms.form>
+
+    @vite('resources/js/jobs/store.js')
 </x-layout>

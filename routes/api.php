@@ -18,13 +18,14 @@ use Illuminate\Http\Request;
 //    ]);
 //});
 
-//Route::get('/', [JobController::class, 'index']);
+Route::get('/', [JobController::class, 'index']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [SessionController::class, 'index']);
     Route::delete('/logout', [SessionController::class, 'destroy']);
 
     Route::get('/jobs/create', [JobController::class, 'create']);
+    Route::post('/jobs', [JobController::class, 'store']);
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/user/jobs', [DashboardController::class, 'create']);

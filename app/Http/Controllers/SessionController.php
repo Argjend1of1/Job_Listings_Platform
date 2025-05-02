@@ -58,7 +58,7 @@ class SessionController extends Controller
 
         // Optionally invalidate the session and regenerate CSRF token
         $request->session()->invalidate();
-        $request->session()->regenerateToken();
+//        $request->session()->regenerateToken();
 
         return response()->json([
             'message' => 'Successfully logged out!'

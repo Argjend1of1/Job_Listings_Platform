@@ -12,11 +12,9 @@
             <x-section-heading>Top Jobs</x-section-heading>
 
             <div class="grid gap-8 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 ">
-                @if($featuredJobs)
-                    @foreach($featuredJobs as $job)
+                    @foreach($jobs as $job)
                         <x-job-card :$job/>
                     @endforeach
-                @endif
             </div>
         </section>
 
@@ -34,11 +32,9 @@
         <section>
             <x-section-heading>Featured Jobs</x-section-heading>
             <div class="mt-6 space-y-6">
-                @if($jobs)
                     @foreach($jobs as $job)
                         <x-job-card-wide :$job/>
                     @endforeach
-                @endif
             </div>
 
         </section>

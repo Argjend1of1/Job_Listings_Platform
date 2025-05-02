@@ -30,7 +30,6 @@
 
             <div class="space-x-5 flex flex-row items-center hidden" id="userLinks"></div>
 
-
             <div class="space-x-6 font-bold hidden" id="guestLinks">
                 <a href="/api/login">Login</a>
                 <a href="/api/register">Register</a>
@@ -44,7 +43,6 @@
 
     @vite([
         'resources/js/session.js',
-        'resources/js/jobs/create.js',
         'resources/js/dashboard/index.js'
     ])
 </body>

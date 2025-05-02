@@ -1,3 +1,5 @@
+import {getCookieValue} from "./reusableFunctions/getCookie.js";
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('loginForm');
     if (!form) return;
@@ -12,15 +14,18 @@ document.addEventListener('DOMContentLoaded', () => {
             // 1. Get CSRF cookie
             await fetch('/sanctum/csrf-cookie', {
                 method: 'GET',
-                credentials: 'include' // important to send cookies
+                credentials: 'include'
             });
+
+            const xsrfToken = decodeURIComponent(getCookieValue('XSRF-TOKEN'));
 
             // 2. Attempt login
             const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'X-XSRF-TOKEN': xsrfToken
                 },
                 body: JSON.stringify(payload),
                 credentials: 'include'

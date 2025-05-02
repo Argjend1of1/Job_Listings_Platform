@@ -20,14 +20,13 @@ class JobController extends Controller
             ->with(['employer', 'tags'])
             ->get()
             ->groupBy('featured');
-//        dd($jobs->all());
+
+//        dd($jobs->first()[0]->load('employer'));
+//        dd($jobs->first());
 
 //        return $jobs;
-
-
         return view('jobs.index', [
-            'jobs' => $jobs[0] ?? null,
-            'featuredJobs' => $jobs[1] ?? null,
+            'jobs' => $jobs->first() ?? null,
             'tags' => Tag::all()
         ]);
     }
@@ -51,57 +50,24 @@ class JobController extends Controller
             'tags' => ['nullable']
         ]);
 
-        $attributes['featured'] = $request->has('featured');
+//        $attributes['featured'] = $request->has('featured');
 
         $job = Auth::user()->employer->job()->create(
             Arr::except($attributes, 'tags')
         );
 
         if($attributes['tags']) {
-            foreach (explode(',', $attributes['tags']) as $tag) {
+            foreach (explode(',', strtolower($attributes['tags'])) as $tag) {
                 $job->tag($tag);
             }
         }
 
-        return redirect('/');
-    }
+        $job->load('employer');
+        $job->load('tags');
 
-    public function edit($id, Job $job) {
-        if(Auth::user()->id != $id) {
-            return redirect('/');
-        }
-
-        return view('dashboard/edit', [
-            'job' => $job,
-            'id' => $id
+        return response()->json([
+            'message' => "Job Listed Successfully",
+            'jobs' => $job
         ]);
-    }
-
-    public function update(Request $request, $id, Job $job) {
-
-        $request->validate([
-            'title'       => 'required|string|max:255',
-            'salary'      => 'required|string|max:100', // if salary is in string format like "$50,000 USD"
-            'location'    => 'required|string|max:255',
-            'schedule'    => 'required|in:Full Time,Part Time', // customize as needed
-        ]);
-
-        $job->update([
-            'title' => $request->title,
-            'salary' => $request->salary,
-            'location' => $request->location,
-            'schedule' => $request->schedule
-        ]);
-
-//      send an email to the user through queues
-
-        return redirect("dashboard/$id");
-    }
-
-    public function destroy($id, Job $job) {
-        $job->delete();
-
-        return redirect("dashboard/$id");
-
     }
 }

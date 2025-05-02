@@ -1,4 +1,4 @@
-import { initializeDropdown } from "./navDropdown.js";
+import { initializeDropdown } from "./reusableFunctions/navDropdown.js";
 import {getCookieValue} from "./reusableFunctions/getCookie.js";
 
 
