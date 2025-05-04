@@ -1,6 +1,6 @@
 <x-panel class="flex-col text-center">
-    <div class="self-start text-sm">{{$job->employer->name}}</div>
-    <div class="py-8 ">
+    <a href="/employer/{{$job->employer->id}}/jobs" class="self-start text-sm hover:underline">{{$job->employer->name}}</a>
+    <div class="py-8">
         <h3 class="font-bold group-hover:text-blue-900 transition-colors duration-200">
             <a href="{{$job->url}}" target="_blank">
                 {{$job->title}}
@@ -12,7 +12,7 @@
     <div class="flex justify-between items-center mt-auto">
         <div>
             @foreach($job->tags as $tag)
-                <x-tag :$tag class="text-[10px] px-3 py-1"/>
+                <x-tag :$tag class="text-[10px] px-3 py-1 mx-0.5"/>
             @endforeach
         </div>
 

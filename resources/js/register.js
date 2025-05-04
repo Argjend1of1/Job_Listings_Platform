@@ -1,5 +1,7 @@
 import {fetchRequest} from "./reusableFunctions/fetchRequest.js";
 import {getCookieValue} from "./reusableFunctions/getCookie.js";
+import {gotoRoute} from "./reusableFunctions/gotoRoute.js";
+import {showResponseMessage} from "./reusableFunctions/showResponseMessage.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const form =
@@ -36,25 +38,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: formData
                 })
 
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    // document.getElementById('userMessage').innerText =
-                    //     errorData.message || 'Failed to create account!';
-                    return;
-                }
                 const result = await response.json();
                 console.log(result);
 
-                document.getElementById('responseMessage').textContent = result.message;
+                const responseToUser =
+                    document.getElementById('responseMessage');
 
-                setTimeout(() => {
-                    window.location.href = '/api/login';
-                }, 1000);
+                if(result.message !== 'Successfully Registered!') {
+                    console.log("HERE!");
+                    document.getElementById('password').value = '';
+                    document.getElementById('password_confirmation').value = '';
+                    showResponseMessage(responseToUser, result);
+                } else {
+                    responseToUser.classList.remove('text-red-700');
+                    responseToUser.classList.add('text-green-700');
+                    showResponseMessage(responseToUser, result);
+                }
 
+                if (!response.ok) throw result;
+
+
+                gotoRoute('/api/login');
             } catch (err) {
                 document.getElementById('responseMessage')
-                    .textContent = err.message || 'Registration failed.';
+                    .textContent = err.message || 'Registration Failed!';
             }
         });
 });

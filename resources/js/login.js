@@ -1,4 +1,6 @@
 import {getCookieValue} from "./reusableFunctions/getCookie.js";
+import {showResponseMessage} from "./reusableFunctions/showResponseMessage.js";
+import {gotoRoute} from "./reusableFunctions/gotoRoute.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('loginForm');
@@ -33,15 +35,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const result = await response.json();
 
+            const responseToUser =
+                document.getElementById('responseMessage');
+
+            if(result.message !== 'Logged in successfully!') {
+                document.getElementById('password').value = '';
+                showResponseMessage(responseToUser, result);
+            } else {
+                responseToUser.classList.remove('text-red-700');
+                responseToUser.classList.add('text-green-700');
+                showResponseMessage(responseToUser, result);
+            }
+
             if (!response.ok) throw result;
 
-            document.getElementById('responseMessage')
-                .textContent = result.message;
-
-            setTimeout(() => {
-                window.location.replace('/');
-            }, 1000);
-
+            gotoRoute('/');
         } catch (err) {
             document.getElementById('responseMessage')
                 .textContent = err.message || 'Login failed.';

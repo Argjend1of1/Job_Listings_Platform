@@ -22,10 +22,8 @@
             </div>
 
             <div class="space-x-6 font-bold">
-                <a href="">Jobs</a>
-                <a href="">Careers</a>
-                <a href="">Salaries</a>
-                <a href="">Companies</a>
+                <a href="" class="hover:underline">Jobs</a>
+                <a href="/employers" class="hover:underline">Companies</a>
             </div>
 
             <div class="space-x-5 flex flex-row items-center hidden" id="userLinks"></div>

@@ -47,7 +47,7 @@ class SessionController extends Controller
         $request->session()->regenerate();
 
         return response()->json([
-            'message' => 'Logged in successfully',
+            'message' => 'Logged in successfully!',
             'user' => Auth::user()
         ]);
     }
