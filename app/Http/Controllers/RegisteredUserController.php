@@ -28,12 +28,19 @@ class RegisteredUserController extends Controller
                 'password' => bcrypt($userAttributes['password'])
             ];
 
+//            dd($userAttributes);
+
             // Check if the 'employer' field is provided
             if ($userAttributes['employer'] !== null) {
                 // Check if the 'logo' field is provided and is a valid file
                 if (!$request->hasFile('logo')) {
                     return response()->json([
                         'message' => 'A company must have a logo!'
+                    ], 422);
+                }
+                if (empty($userAttributes['category'])) {
+                    return response()->json([
+                        'message' => 'A company must have a category'
                     ], 422);
                 }
 
@@ -43,6 +50,7 @@ class RegisteredUserController extends Controller
                 // Create the employer record
                 $user->employer()->create([
                     'name' => $userAttributes['employer'],
+                    'category' => $userAttributes['category'],
                     'logo' => $logoPath
                 ]);
             }else {
