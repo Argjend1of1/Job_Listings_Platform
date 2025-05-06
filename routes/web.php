@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\JobController;
@@ -13,6 +14,8 @@ Route::get('/', [JobController::class, 'index']);
 
 Route::get('/employers', [EmployerController::class, 'index']);
 Route::get('/employer/{id}/jobs', [EmployerController::class, 'show']);
+
+Route::get('/categories/{name}', [CategoryController::class, 'index']);
 
 Route::get('/search', [SearchController::class, '__invoke']);
 Route::get('/tags/{tag:name}', [TagController::class, '__invoke']);//{tag:name} - frontend

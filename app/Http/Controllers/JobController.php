@@ -51,10 +51,12 @@ class JobController extends Controller
         ]);
 
 //        $attributes['featured'] = $request->has('featured');
+        $attributes['category_id'] = Auth::user()->employer->category_id;
 
         $job = Auth::user()->employer->job()->create(
             Arr::except($attributes, 'tags')
         );
+
 
         if($attributes['tags']) {
             foreach (explode(',', strtolower($attributes['tags'])) as $tag) {

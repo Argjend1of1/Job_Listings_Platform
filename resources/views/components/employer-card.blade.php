@@ -6,7 +6,11 @@
                 {{$employer->name}}
             </a>
         </h3>
-        <p class="text-xs text-gray-400 mt-1.5"></p>
+        <a href="/categories/{{$employer->category->name}}"
+           class="text-xs text-gray-400 mt-1.5 hover:underline"
+        >
+            {{$employer->category->name}}
+        </a>
     </div>
 
     <div class="flex justify-center items-center mt-auto">

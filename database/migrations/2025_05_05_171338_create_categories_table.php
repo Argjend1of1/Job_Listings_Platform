@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Category;
 use App\Models\Employer;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,15 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jobs', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Employer::class);
-            $table->foreignIdFor(Category::class);
-            $table->string('title');
-            $table->string('salary');
-            $table->string('location');
-            $table->string('schedule')->default('Full Time');
-            $table->string('url');
+//            $table->foreignIdFor(Employer::class);
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
@@ -31,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jobs');
+        Schema::dropIfExists('categories');
     }
 };
