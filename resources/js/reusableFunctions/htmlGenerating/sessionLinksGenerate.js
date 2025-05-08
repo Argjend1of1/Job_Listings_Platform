@@ -34,7 +34,7 @@ export function adminLinks(user) {
                         <a href="/account" id="userDashboard" class="block border-b border-b-gray-800 px-4 py-2 text-white hover:bg-gray-800 focus:bg-gray-900">Account</a>
                         <a href="/dashboard" id="userDashboard" class="block border-b border-b-gray-800 px-4 py-2 text-white hover:bg-gray-800 focus:bg-gray-900">Dashboard</a>
                         <a href="/jobs/create" id="postJobForm" class="block px-4 py-2 text-white border-b border-b-gray-800 hover:bg-gray-800 focus:bg-gray-900">Post a Job</a>
-                        <a href="/users" id="userDashboard" class="block border-b border-b-gray-800 px-4 py-2 text-white hover:bg-gray-800 focus:bg-gray-900">Users</a>
+                        <a href="/employers" id="userDashboard" class="block border-b border-b-gray-800 px-4 py-2 text-white hover:bg-gray-800 focus:bg-gray-900">Employers</a>
                         <button id="logoutBtn" class="w-full text-left block px-4 py-2 text-red-400 hover:bg-red-900 cursor-pointer focus:bg-red-950">Log Out</button>
                     </div>
                 </div>

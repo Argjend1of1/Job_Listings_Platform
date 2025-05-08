@@ -5,7 +5,7 @@
          <x-forms.input label="Email" name="email"/>
          <x-forms.input type="password" label="Password" name="password"/>
 
-         <p class="text-red-500 font-semibold" id="responseMessage"></p>
+         <p class="text-red-500" id="responseMessage"></p>
 
          <x-forms.button type="submit">Log In</x-forms.button>
      </x-forms.form>

@@ -2,7 +2,7 @@
 {{--    <a href="/employer/{{$employer->id}}/jobs" class="self-start text-sm hover:underline">{{$employer->name}}</a>--}}
     <div class="py-8">
         <h3 class="font-bold group-hover:text-blue-900 transition-colors duration-200 hover:underline">
-            <a href="/employer/{{$employer->id}}/jobs">
+            <a href="/companies/{{$employer->id}}/jobs">
                 {{$employer->name}}
             </a>
         </h3>
@@ -14,6 +14,6 @@
     </div>
 
     <div class="flex justify-center items-center mt-auto">
-        <x-employer-logo :$employer :width="42"/>
+        <x-employer-logo :employer="$employer->user" :width="42"/>
     </div>
 </x-panel>

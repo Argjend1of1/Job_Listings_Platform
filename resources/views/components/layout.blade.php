@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF token for JavaScript -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <title>Pixel Positions</title>
     <link
@@ -22,8 +23,8 @@
             </div>
 
             <div class="space-x-6 font-bold flex items-center">
-                <a href="" class="hover:underline">Listings</a>
-                <a href="/employers" class="hover:underline">Companies</a>
+                <a href="/jobs" class="hover:underline">Listings</a>
+                <a href="/companies" class="hover:underline">Companies</a>
 
                 <div class="relative group inline-block">
                     <a href="#" class="hover:underline inline-block">Categories</a>
@@ -47,11 +48,11 @@
                 </div>
             </div>
 
-            <div class="space-x-5 flex flex-row items-center hidden" id="userLinks"></div>
+            <div class="space-x-5 flex flex-row items-center hidden" id="sessionLinks"></div>
 
             <div class="space-x-6 font-bold hidden" id="guestLinks">
-                <a href="/api/login">Login</a>
-                <a href="/api/register">Register</a>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
             </div>
         </nav>
 
@@ -62,7 +63,7 @@
 
     @vite([
         'resources/js/session.js',
-        'resources/js/dashboard/index.js'
+        'resources/js/employerDashboard/index.js'
     ])
 </body>
 </html>

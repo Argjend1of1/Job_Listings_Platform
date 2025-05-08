@@ -5,6 +5,7 @@ use App\Http\Controllers\dashboard\EmployerDashboardController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\EmployersController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', 'role:employer,admin'])->group(function () {
@@ -16,7 +17,7 @@ Route::middleware(['auth:sanctum', 'role:employer,admin'])->group(function () {
 });
 
 Route::middleware(['auth:sanctum', 'role:admin,superadmin'])->group(function () {
-
+    Route::delete('/employers/{id}', [EmployersController::class, 'destroy']);
 });
 
 Route::middleware(['auth:sanctum', 'role:superadmin'])->group(function () {

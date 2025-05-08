@@ -44,12 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(result.message !== 'Successfully Registered!') {
                     document.getElementById('password').value = '';
                     document.getElementById('password_confirmation').value = '';
+                    responseToUser.classList.add('text-red-500');
                     showResponseMessage(responseToUser, result);
                 } else {
-                    responseToUser.classList.remove('text-red-700');
-                    responseToUser.classList.add('text-green-700');
+                    responseToUser.classList.add('text-green-500');
                     showResponseMessage(responseToUser, result);
                 }
+                console.log("HERE!!!");
 
                 if (!response.ok) throw result;
 

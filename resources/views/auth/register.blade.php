@@ -25,7 +25,7 @@
              <x-forms.option value="Sports & Recreation">Sports & Recreation</x-forms.option>
          </x-forms.select>
 
-         <p id="responseMessage" class="text-red-500 mt-2"></p>
+         <p id="responseMessage" class="mt-2"></p>
 
          <x-forms.button>Create Account</x-forms.button>
 
