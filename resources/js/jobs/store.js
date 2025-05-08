@@ -1,6 +1,7 @@
 import {getCookieValue} from "../reusableFunctions/getCookie.js";
 import {postRequest} from "../reusableFunctions/fetchRequest.js";
 import {showResponseMessage} from "../reusableFunctions/showResponseMessage.js";
+import {gotoRoute} from "../reusableFunctions/gotoRoute.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const insertJobForm =
@@ -35,13 +36,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 showResponseMessage(responseToUser, result);
             }
 
-            if (!response.ok) {
-                throw new Error('Could not store job!');
-            }
+            if (!response.ok) throw result;
 
-            setTimeout(() => {
-                window.location.href = '/api/dashboard';
-            }, 1000);
+            gotoRoute('/dashboard');
         }catch (err) {
             console.log(err);
         }

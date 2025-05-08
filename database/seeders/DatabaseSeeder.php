@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Superadmin',
             'email' => 'superadmin@job-platform.com',
             'password' => bcrypt('asdasd'),
+            'logo' => fake()->imageUrl(),
             'role' => 'superadmin',
         ]);
 

@@ -14,9 +14,15 @@ class EmployerDashboardController extends Controller
     }
 
     public function create(Request $request) {
-//      will only work if route protected with auth:sanctum and a valid token is sent with the request
-//      laravel automatically checks for the authenticated user.
-        $user = $request->user();
+
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show()
+    {
+        $user = Auth::user();
 
         return response()->json([
             'user' => $user,
@@ -25,17 +31,14 @@ class EmployerDashboardController extends Controller
     }
 
     public function edit(Job $job) {
-        return view('employerDashboard/edit', [
+        $job->load('employer');
+
+        if(Auth::user()->id !== $job->employer->user_id) {
+            return redirect('/');
+        }
+
+        return view('employerDashboard.edit', [
             'job' => $job,
-        ]);
-    }
-
-    public function editJob(Job $job) {
-        $user = Auth::user();
-
-        return response()->json([
-            'employer' => $user->employer,
-            'job' => $job
         ]);
     }
 
@@ -55,7 +58,7 @@ class EmployerDashboardController extends Controller
 //      send an email to the user through queues
 
         return response()->json([
-            'message' => 'Job updated successfully.',
+            'message' => 'Job updated successfully!',
             'job'     => $job->fresh()->load('tags','employer'),
         ], 200);
 //      reloading a fresh model instance for the job with its relations
@@ -65,7 +68,7 @@ class EmployerDashboardController extends Controller
         $job->delete();
 
         return response()->json([
-            'message' => 'Listing deleted successfully.'
+            'message' => 'Listing deleted successfully!'
         ], 200);
     }
 }

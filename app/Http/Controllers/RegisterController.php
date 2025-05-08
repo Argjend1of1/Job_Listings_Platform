@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rules\Password;
 
-class RegisteredUserController extends Controller
+class RegisterController extends Controller
 {
 
     public function create()
@@ -25,30 +25,23 @@ class RegisteredUserController extends Controller
         try {
             $userAttributes = $request->validated();
 
+            $logoPath = $request->file('logo')->store('logos'); // Store the file
+
             $userTableAttributes = [
                 'name' => $userAttributes['name'],
                 'email' => $userAttributes['email'],
-                'password' => bcrypt($userAttributes['password'])
+                'password' => bcrypt($userAttributes['password']),
+                'logo' => $logoPath
             ];
-
-//            dd($userAttributes);
 
             // Check if the 'employer' field is provided
             if ($userAttributes['employer'] !== null) {
-                // Check if the 'logo' field is provided and is a valid file
-                if (!$request->hasFile('logo')) {
-                    return response()->json([
-                        'message' => 'A company must have a logo!'
-                    ], 422);
-                }
-
                 if (empty($userAttributes['category'])) {
                     return response()->json([
-                        'message' => 'A company must have a category'
+                        'message' => 'A company must belong to a category.'
                     ], 422);
                 }
 
-                $logoPath = $request->file('logo')->store('logos'); // Store the file
                 $category = Category::where('name', $userAttributes['category'])->first();
                 $userTableAttributes['role'] = 'employer';
 
@@ -57,7 +50,6 @@ class RegisteredUserController extends Controller
                 $user->employer()->create([
                     'name' => $userAttributes['employer'],
                     'category_id' => $category->id,
-                    'logo' => $logoPath
                 ]);
             }else {
                 $user = User::create($userTableAttributes);
@@ -73,8 +65,7 @@ class RegisteredUserController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
-                'message' => 'User already exists!',
-                'error' => $e->getMessage()
+                'message' => $e->getMessage() ?? 'User already exists!'
             ], 500);
         }
     }

@@ -3,27 +3,14 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\dashboard\EmployerDashboardController;
 use App\Http\Controllers\JobController;
-use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
-
-
-//Route::middleware('auth:sanctum')->get('/', function(Request $request) {
-//    return response()->json([
-//        'user' => $request->user(),
-//        'jobs' => Job::latest()->with(['employer','tags'])->get(),
-//        'tags' => Tag::all(),
-//    ]);
-//});
-
-//Route::get('/', [JobController::class, 'index']);
 
 Route::middleware(['auth:sanctum', 'role:employer,admin'])->group(function () {
     Route::post('/jobs/create', [JobController::class, 'store']);
 
-    Route::get('/dashboard', [EmployerDashboardController::class, 'index']);
-    Route::get('/user/jobs', [EmployerDashboardController::class, 'create']);
-    Route::get('/dashboard/edit/{job}', [EmployerDashboardController::class, 'editJob']);
+    Route::get('/dashboard', [EmployerDashboardController::class, 'show']);
     Route::patch('/dashboard/edit/{job}', [EmployerDashboardController::class, 'update']);
     Route::delete('/dashboard/edit/{job}', [EmployerDashboardController::class, 'destroy']);
 });
@@ -49,12 +36,7 @@ Route::middleware([
 });
 
 Route::middleware(['guest:sanctum'])->group(function () {
-    Route::get('/login', [SessionController::class, 'create'])
-        ->name('login');
-
     Route::post('/login', [SessionController::class, 'store']);
-
-    Route::get('/register', [RegisteredUserController::class, 'create']);
-    Route::post('/register', [RegisteredUserController::class, 'store']);
+    Route::post('/register', [RegisterController::class, 'store']);
 });
 

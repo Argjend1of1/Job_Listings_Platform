@@ -1,4 +1,3 @@
-import {fetchRequest} from "./reusableFunctions/fetchRequest.js";
 import {getCookieValue} from "./reusableFunctions/getCookie.js";
 import {gotoRoute} from "./reusableFunctions/gotoRoute.js";
 import {showResponseMessage} from "./reusableFunctions/showResponseMessage.js";
@@ -14,12 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const formData = new FormData(form);
 
-            const logoInput = form
-                .querySelector('input[name="logo"]');
-
-            if (!logoInput.files.length) {
-                formData.delete('logo'); // Remove the 'logo' field if no file is selected
-            }
+            // for (let [key, value] of formData.entries()) {
+            //     console.log(`${key}:`, value);
+            // }
 
             await fetch('/sanctum/csrf-cookie', {
                 credentials: 'include'
@@ -28,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const xsrfToken = decodeURIComponent(getCookieValue('XSRF-TOKEN'));
 
             try {
+                console.log('HERE')
                 const response = await fetch('/api/register', {
                     method: 'POST',
                     credentials: 'include',
@@ -56,11 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (!response.ok) throw result;
 
-
-                gotoRoute('/api/login');
+                gotoRoute('/login');
             } catch (err) {
                 document.getElementById('responseMessage')
-                    .textContent = err.message || 'Registration Failed!';
+                    .textContent = err?.message || 'Registration Failed!';
             }
         });
 });

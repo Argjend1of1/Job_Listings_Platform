@@ -1,8 +1,9 @@
 import { initializeDropdown } from "./reusableFunctions/navDropdown.js";
 import {getCookieValue} from "./reusableFunctions/getCookie.js";
 import {superAdminLinks, adminLinks, employerLinks, userLinks} from "./reusableFunctions/htmlGenerating/sessionLinksGenerate.js";
+import {gotoRoute} from "./reusableFunctions/gotoRoute.js";
 
-const excludedPaths = ['/api/login', '/api/register'];
+const excludedPaths = ['/login', '/register'];
 
 if(!excludedPaths.includes(window.location.pathname)) {
     document.addEventListener("DOMContentLoaded", async () => {
@@ -23,19 +24,18 @@ if(!excludedPaths.includes(window.location.pathname)) {
             }
 
             const jsonData = await response.json();
+            console.log(jsonData.user.role);
             const user = jsonData.user;
-            const employer = user.employer;
 
             const sessionLinks = document.getElementById('sessionLinks');
             sessionLinks.classList.remove('hidden');
-            console.log(user.role);
 
             if(user.role === 'superadmin') {
                 sessionLinks.innerHTML = superAdminLinks();
             } else if(user.role === 'admin') {
-                sessionLinks.innerHTML = adminLinks(employer);
+                sessionLinks.innerHTML = adminLinks(user);
             } else if(user.role === 'employer') {
-                sessionLinks.innerHTML = employerLinks(employer);
+                sessionLinks.innerHTML = employerLinks(user);
             } else {
                 sessionLinks.innerHTML = userLinks();
             }
@@ -51,11 +51,11 @@ if(!excludedPaths.includes(window.location.pathname)) {
                         'X-XSRF-TOKEN': decodeURIComponent(getCookieValue('XSRF-TOKEN'))
                     }
                 });
-                window.location.href = '/';
+                gotoRoute('/');
             });
 
         } catch (error) {
-            console.log('User not authenticated');
+            console.log('User not authenticated. ' + error);
         }
     });
 } else {

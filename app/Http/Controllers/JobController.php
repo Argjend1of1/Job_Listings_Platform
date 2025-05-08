@@ -25,7 +25,7 @@ class JobController extends Controller
 //        dd($jobs->first());
 
 //        return $jobs;
-        return view('jobs.index', [
+        return view('index', [
             'jobs' => $jobs->first() ?? null,
             'tags' => Tag::all()
         ]);
@@ -50,13 +50,11 @@ class JobController extends Controller
             'tags' => ['nullable']
         ]);
 
-//        $attributes['featured'] = $request->has('featured');
         $attributes['category_id'] = Auth::user()->employer->category_id;
 
         $job = Auth::user()->employer->job()->create(
             Arr::except($attributes, 'tags')
         );
-
 
         if($attributes['tags']) {
             foreach (explode(',', strtolower($attributes['tags'])) as $tag) {
@@ -68,8 +66,24 @@ class JobController extends Controller
         $job->load('tags');
 
         return response()->json([
-            'message' => "Job Listed Successfully",
+            'message' => "Job Listed Successfully!",
             'jobs' => $job
+        ]);
+    }
+
+    public function show() {
+        $jobs = Job::latest()
+            ->with(['employer', 'tags'])
+            ->get()
+            ->groupBy('featured');
+
+//        dd($jobs->first()[0]->load('employer'));
+//        dd($jobs->first());
+
+//        return $jobs;
+        return view('jobs.index', [
+            'jobs' => $jobs->first() ?? null,
+            'tags' => Tag::all()
         ]);
     }
 }

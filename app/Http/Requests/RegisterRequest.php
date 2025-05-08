@@ -28,9 +28,9 @@ class RegisterRequest extends FormRequest
             'category' => ['nullable'],
             'email' => ['required', 'email', 'unique:users, email'],
             'password' => ['required', 'confirmed', Password::min(6)],
+            'logo' => ['required', File::types(['png', 'jpg', 'jpeg', 'webp'])],
             'role' => ['nullable'],
             'employer' => ['nullable'],
-            'logo' => ['nullable', File::types(['png', 'jpg', 'jpeg', 'webp'])],
         ];
     }
 }

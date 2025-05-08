@@ -6,12 +6,12 @@
          <x-forms.input label="Email" name="email"/>
          <x-forms.input type="password" label="Password" name="password"/>
          <x-forms.input type="password" label="Password Confirmation" name="password_confirmation"/>
-
+         <x-forms.input label="Profile Image" name="logo" type="file"/>
 
          <x-forms.divider/>
 
          <x-forms.input label="Company Name" name="employer"/>
-         <x-forms.select class="text-white p-3" label="Category" name="category">
+         <x-forms.select class="text-white p-2" label="Category" name="category">
              <x-forms.option value="">-Select a Category-</x-forms.option>
              <x-forms.option value="Technology & IT">Technology & IT</x-forms.option>
              <x-forms.option value="Healthcare & Life Sciences">Healthcare & Life Sciences</x-forms.option>
@@ -24,11 +24,8 @@
              <x-forms.option value="Logistics & Transportation">Logistics & Transportation</x-forms.option>
              <x-forms.option value="Sports & Recreation">Sports & Recreation</x-forms.option>
          </x-forms.select>
-         <x-forms.input label="Employer Logo" name="logo" type="file"/>
-
 
          <p id="responseMessage" class="text-red-500 mt-2"></p>
-
 
          <x-forms.button>Create Account</x-forms.button>
 

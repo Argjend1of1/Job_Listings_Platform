@@ -1,6 +1,7 @@
 import {getCookieValue} from "./reusableFunctions/getCookie.js";
 import {showResponseMessage} from "./reusableFunctions/showResponseMessage.js";
 import {gotoRoute} from "./reusableFunctions/gotoRoute.js";
+import {postRequest} from "./reusableFunctions/fetchRequest.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('loginForm');
@@ -22,16 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const xsrfToken = decodeURIComponent(getCookieValue('XSRF-TOKEN'));
 
             // 2. Attempt login
-            const response = await fetch('/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'X-XSRF-TOKEN': xsrfToken
-                },
-                body: JSON.stringify(payload),
-                credentials: 'include'
-            });
+            const response = await postRequest(
+                '/api/login', xsrfToken, payload
+            );
 
             const result = await response.json();
 

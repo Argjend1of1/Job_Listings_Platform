@@ -1,4 +1,3 @@
-
 function renderJobCard(job, user) {
     //
     const tagsHtml = job.tags?.map(tag => `
@@ -8,7 +7,7 @@ function renderJobCard(job, user) {
     return `
             <div class="p-4 bg-white/10 rounded-xl mt-3 flex border border-transparent hover:border-blue-900 cursor-pointer group transition-colors duration-200">
                 <div>
-                    <img src="/${user.employer.logo || '/default-logo.png'}" alt="${user.employer.name}" class="rounded-xl" width="90" height="90" />
+                    <img src="/${user.logo || '/default-logo.png'}" alt="${user.employer.name}" class="rounded-xl" width="90" height="90" />
                 </div>
 
                 <div class="flex-1 flex flex-col ml-3">
@@ -35,10 +34,10 @@ function renderJobCard(job, user) {
 
 document.addEventListener('DOMContentLoaded', async () => {
     // only on a certain path run this code, else return
-    if (!window.location.pathname.startsWith("/api/dashboard")) return;
+    if (window.location.pathname !== "/dashboard") return;
 
     try {
-        const jobsRes = await fetch('/api/user/jobs', {
+        const jobsRes = await fetch('/api/dashboard', {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -56,7 +55,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
             container.innerHTML = jobs.map(job => renderJobCard(job, user)).join('');
         }
-
     } catch (err) {
         console.error('Failed fetching jobs:', err);
         window.location.href = '/';
