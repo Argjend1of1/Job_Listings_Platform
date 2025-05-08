@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\GuestMiddleware;
+use App\Http\Middleware\RoleCheckMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -21,9 +22,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'web'           => StartSession::class,
             'csrf'          => VerifyCsrfToken::class,
-            'admin'         => AdminMiddleware::class,
+            'role'          => RoleCheckMiddleware::class,
             'auth:sanctum'  => EnsureFrontendRequestsAreStateful::class,
-
+            'guest:sanctum' => GuestMiddleware::class
         ]);
 
         $middleware->group('api', [

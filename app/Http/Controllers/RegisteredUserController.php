@@ -50,6 +50,7 @@ class RegisteredUserController extends Controller
 
                 $logoPath = $request->file('logo')->store('logos'); // Store the file
                 $category = Category::where('name', $userAttributes['category'])->first();
+                $userTableAttributes['role'] = 'employer';
 
                 $user = User::create($userTableAttributes);
                 // Create the employer record

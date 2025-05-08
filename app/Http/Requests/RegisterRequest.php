@@ -25,10 +25,11 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => ['required'],
+            'category' => ['nullable'],
             'email' => ['required', 'email', 'unique:users, email'],
             'password' => ['required', 'confirmed', Password::min(6)],
+            'role' => ['nullable'],
             'employer' => ['nullable'],
-            'category' => ['nullable'],
             'logo' => ['nullable', File::types(['png', 'jpg', 'jpeg', 'webp'])],
         ];
     }

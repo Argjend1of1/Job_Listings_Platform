@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('responseMessage');
 
                 if(result.message !== 'Successfully Registered!') {
-                    console.log("HERE!");
                     document.getElementById('password').value = '';
                     document.getElementById('password_confirmation').value = '';
                     showResponseMessage(responseToUser, result);

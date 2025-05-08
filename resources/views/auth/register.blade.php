@@ -27,7 +27,7 @@
          <x-forms.input label="Employer Logo" name="logo" type="file"/>
 
 
-         <p id="responseMessage" class="text-red-700 mt-2"></p>
+         <p id="responseMessage" class="text-red-500 mt-2"></p>
 
 
          <x-forms.button>Create Account</x-forms.button>

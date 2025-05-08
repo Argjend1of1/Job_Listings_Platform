@@ -21,4 +21,8 @@ class Employer extends Model
     {
         return $this->hasMany(Job::class);
     }
+
+    public function category(): BelongsTo {
+        return $this->belongsTo(Category::class);
+    }
 }

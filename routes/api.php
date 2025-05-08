@@ -1,13 +1,11 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\dashboard\EmployerDashboardController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
-use App\Models\Tag;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 
 
 //Route::middleware('auth:sanctum')->get('/', function(Request $request) {
@@ -18,25 +16,39 @@ use Illuminate\Http\Request;
 //    ]);
 //});
 
-Route::get('/', [JobController::class, 'index']);
+//Route::get('/', [JobController::class, 'index']);
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', [SessionController::class, 'index']);
-    Route::delete('/logout', [SessionController::class, 'destroy']);
+Route::middleware(['auth:sanctum', 'role:employer,admin'])->group(function () {
+    Route::post('/jobs/create', [JobController::class, 'store']);
 
-    Route::get('/jobs/create', [JobController::class, 'create']);
-    Route::post('/jobs', [JobController::class, 'store']);
+    Route::get('/dashboard', [EmployerDashboardController::class, 'index']);
+    Route::get('/user/jobs', [EmployerDashboardController::class, 'create']);
+    Route::get('/dashboard/edit/{job}', [EmployerDashboardController::class, 'editJob']);
+    Route::patch('/dashboard/edit/{job}', [EmployerDashboardController::class, 'update']);
+    Route::delete('/dashboard/edit/{job}', [EmployerDashboardController::class, 'destroy']);
+});
 
-    Route::get('/dashboard', [DashboardController::class, 'index']);
-    Route::get('/user/jobs', [DashboardController::class, 'create']);
-    Route::get('/dashboard/edit/{job}', [DashboardController::class, 'editJob']);
-    Route::patch('/dashboard/edit/{job}', [DashboardController::class, 'update']);
-    Route::delete('/dashboard/edit/{job}', [DashboardController::class, 'destroy']);
+Route::middleware(['auth:sanctum', 'role:admin,superadmin'])->group(function () {
 
 });
 
+Route::middleware(['auth:sanctum', 'role:superadmin'])->group(function () {
 
-Route::middleware(['web', 'guest:sanctum'])->group(function () {
+});
+
+Route::middleware([
+    'auth:sanctum', 'role:user,employer,admin,superadmin'
+])->group(function () {
+    Route::get('/user', [SessionController::class, 'index']);
+    Route::get('/account', [AccountController::class, 'show']);
+    Route::get('/account/edit', [AccountController::class, 'show']);
+    Route::patch('/account/edit', [AccountController::class, 'update']);
+    Route::delete('/account/edit', [AccountController::class, 'destroy']);
+
+    Route::delete('/logout', [SessionController::class, 'destroy']);
+});
+
+Route::middleware(['guest:sanctum'])->group(function () {
     Route::get('/login', [SessionController::class, 'create'])
         ->name('login');
 

@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\dashboard;
 
+use App\Http\Controllers\Controller;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class DashboardController extends Controller
+class EmployerDashboardController extends Controller
 {
     public function index() {
-        return view('dashboard.index');
+        return view('employerDashboard.index');
     }
 
     public function create(Request $request) {
@@ -24,7 +25,7 @@ class DashboardController extends Controller
     }
 
     public function edit(Job $job) {
-        return view('dashboard/edit', [
+        return view('employerDashboard/edit', [
             'job' => $job,
         ]);
     }
@@ -39,7 +40,6 @@ class DashboardController extends Controller
     }
 
     public function update(Request $request, Job $job) {
-
         $request->validate([
             'title'       => 'required|string|max:255',
             'schedule'    => 'required|in:Full Time,Part Time', // customize as needed

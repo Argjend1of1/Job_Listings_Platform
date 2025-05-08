@@ -42,8 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('password').value = '';
                 showResponseMessage(responseToUser, result);
             } else {
-                responseToUser.classList.remove('text-red-700');
-                responseToUser.classList.add('text-green-700');
+                responseToUser.classList.remove('text-red-500');
+                responseToUser.classList.add('text-green-500');
                 showResponseMessage(responseToUser, result);
             }
 
